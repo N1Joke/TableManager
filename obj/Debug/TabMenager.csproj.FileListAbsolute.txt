@@ -1,0 +1,10 @@
+E:\Projects Visual Studio\TabMenager\TabMenager\bin\Debug\TabMenager.exe.config
+E:\Projects Visual Studio\TabMenager\TabMenager\bin\Debug\TabMenager.exe
+E:\Projects Visual Studio\TabMenager\TabMenager\bin\Debug\TabMenager.pdb
+E:\Projects Visual Studio\TabMenager\TabMenager\obj\Debug\TabMenager.csproj.AssemblyReference.cache
+E:\Projects Visual Studio\TabMenager\TabMenager\obj\Debug\TabMenager.Form1.resources
+E:\Projects Visual Studio\TabMenager\TabMenager\obj\Debug\TabMenager.Properties.Resources.resources
+E:\Projects Visual Studio\TabMenager\TabMenager\obj\Debug\TabMenager.csproj.GenerateResource.cache
+E:\Projects Visual Studio\TabMenager\TabMenager\obj\Debug\TabMenager.csproj.CoreCompileInputs.cache
+E:\Projects Visual Studio\TabMenager\TabMenager\obj\Debug\TabMenager.exe
+E:\Projects Visual Studio\TabMenager\TabMenager\obj\Debug\TabMenager.pdb
