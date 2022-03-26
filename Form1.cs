@@ -20,7 +20,12 @@ namespace TabMenager
         private List<int> _valuesToSearch = new List<int>
         {5, 10, 100, 1000, 10000, 100000, 500000, 1000000, 5000000, 10000000, 15000000, 20000000};
 
-        private int indexColumn;
+        private int indexTemteratureSearchColumn;
+
+        const float EpsZero = 8.85E-12f;
+
+        private int indexCapacity = 6;
+        private int indexTgDelta = 2;
 
         public Form1()
         {
@@ -31,6 +36,10 @@ namespace TabMenager
 
             UpdateColumnIndex();
             SetUpStartValueToSearch();
+
+            TemperatureSearch.Checked = true;
+            CalculateValues.Checked= false;
+            UpdateInterface();
         }
 
         private void OpenFilesButton_Click(object sender, EventArgs e)
@@ -47,7 +56,10 @@ namespace TabMenager
 
         private void SaveFilesButton_Click(object sender, EventArgs e)
         {
-            CalculateData();
+            if (TemperatureSearch.Checked)
+                DoTemperatureSearch();
+            else
+                DoCalculateValues();
 
             saveFileDialog1.Filter = "TXT files (*.txt)|*.txt";
 
@@ -59,7 +71,7 @@ namespace TabMenager
             }
         }
 
-        private void CalculateData()
+        private void DoTemperatureSearch()
         {
             for (int f = 0; f < _fileNames.Length; f++)
             {
@@ -81,10 +93,10 @@ namespace TabMenager
 
                     List<float> elements = new List<float>();
 
-                    if (elementsInLine[0] != "" && elementsInLine[indexColumn] != "")
+                    if (elementsInLine[0] != "" && elementsInLine[indexTemteratureSearchColumn] != "")
                     {
                         elements.Add(StringToFloat(elementsInLine[0]));
-                        elements.Add(StringToFloat(elementsInLine[indexColumn]));
+                        elements.Add(StringToFloat(elementsInLine[indexTemteratureSearchColumn]));
 
                     }
                     else
@@ -135,9 +147,67 @@ namespace TabMenager
             }
         }
 
+        private void DoCalculateValues()
+        {
+            for (int f = 0; f < _fileNames.Length; f++)
+            {
+                StreamReader sr = new StreamReader(_fileNames[f]);
+
+                List<List<float>> lines = new List<List<float>>();
+
+                string line = sr.ReadLine();
+
+                while (line != null)
+                {
+                    if (line == "")
+                    {
+                        line = sr.ReadLine();
+                        continue;
+                    }
+
+                    string[] elementsInLine = line.Split(',');
+
+                    List<float> elements = new List<float>();
+
+                    for (int el = 0; el < elementsInLine.Length; el++)
+                    {
+                        if (elementsInLine[el] != "")
+                            elements.Add(StringToFloat(elementsInLine[el]));
+                        else
+                            label2.Text += "Ошибка в файлe: " + openFileDialog1.SafeFileNames[f] + "\n";
+                    }
+
+                    //Epsilon E* = (C * d) / (E0 * S)
+                    float epsilon = (elements[indexCapacity] * StringToFloat(thickness_textBox.Text)) /(EpsZero * StringToFloat(area_textBox.Text));
+                    elements.Add(epsilon);
+
+                    //Real part Epsilon E' = E* / (sqrt(1 + tg^2(delta))) ---- Math.Pow(Math.Tan(delta), 2)
+                    float reEpsilon = (float)(epsilon / Math.Sqrt(1 + Math.Pow(Math.Tan(elements[indexTgDelta]), 2)));
+                    elements.Add(reEpsilon);
+
+                    //Imaginary part Epsilon E'' = E' * tg(delta)
+                    float imEpsilon = reEpsilon * (float)Math.Tan(elements[indexTgDelta]);
+                    elements.Add(imEpsilon);
+
+                    lines.Add(elements);
+
+                    line = sr.ReadLine();
+                }
+
+                foreach (var l in lines)
+                {
+                    _txtFile += "," + l[1].ToString().Replace(',', '.');
+                }
+
+                _txtFile += "\n";
+
+                sr.Close();
+            }
+        }
+
         private float StringToFloat(string elementStr)
         {
-            elementStr = elementStr.Replace('.',',');
+            elementStr = elementStr.Replace('.', ',');
 
             return float.Parse(elementStr);
         }
@@ -158,11 +228,11 @@ namespace TabMenager
         {
             if (checkBox1.Checked)
             {
-                indexColumn = 2;
+                indexTemteratureSearchColumn = indexTgDelta;
             }
             else
             {
-                indexColumn = 6;
+                indexTemteratureSearchColumn = indexCapacity;
             }
         }
 
@@ -192,6 +262,44 @@ namespace TabMenager
                 {
                     dataGridView1.Rows[i].Cells[0].Value = "";
                 }
+            }
+        }
+
+        private void TemperatureSearch_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateValues.Checked = !TemperatureSearch.Checked;
+            UpdateInterface();
+        }
+
+        private void CalculateValues_CheckedChanged(object sender, EventArgs e)
+        {
+            TemperatureSearch.Checked = !CalculateValues.Checked;            
+            UpdateInterface();
+        }
+
+        private void UpdateInterface()
+        {
+            if (TemperatureSearch.Checked)
+            {
+                thickness_label.Visible = false;
+                thickness_textBox.Visible = false;
+                area_label.Visible = false;
+                area_textBox.Visible = false;
+
+                dataGridView1.Visible = true;
+                checkBox1.Visible = true;
+                checkBox2.Visible = true;
+            }
+            else
+            {
+                thickness_label.Visible = true;
+                thickness_textBox.Visible = true;
+                area_label.Visible = true;
+                area_textBox.Visible = true;
+
+                dataGridView1.Visible = false;
+                checkBox1.Visible = false;
+                checkBox2.Visible = false;
             }
         }
     }
