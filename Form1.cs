@@ -196,10 +196,13 @@ namespace TabMenager
 
                 foreach (var l in lines)
                 {
-                    _txtFile += "," + l[1].ToString().Replace(',', '.');
-                }
-
-                _txtFile += "\n";
+                    foreach (var l2 in l)
+                    {
+                        _txtFile += l2.ToString().Replace(',', '.') + ",";
+                    } 
+                    
+                    _txtFile += "\n";
+                }                
 
                 sr.Close();
             }
