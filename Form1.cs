@@ -182,11 +182,11 @@ namespace TabMenager
                     elements.Add(epsilon);
 
                     //Real part Epsilon E' = E* / (sqrt(1 + tg^2(delta))) ---- Math.Pow(Math.Tan(delta), 2)
-                    float reEpsilon = (float)(epsilon / Math.Sqrt(1 + Math.Pow(Math.Tan(elements[indexTgDelta]), 2)));
+                    float reEpsilon = (float)(epsilon / Math.Sqrt(1 + Math.Pow(elements[indexTgDelta], 2)));
                     elements.Add(reEpsilon);
 
                     //Imaginary part Epsilon E'' = E' * tg(delta)
-                    float imEpsilon = reEpsilon * (float)Math.Tan(elements[indexTgDelta]);
+                    float imEpsilon = reEpsilon * (float)elements[indexTgDelta];
                     elements.Add(imEpsilon);
 
                     lines.Add(elements);
@@ -197,12 +197,12 @@ namespace TabMenager
                 foreach (var l in lines)
                 {
                     foreach (var l2 in l)
-                    {
+                    {                        
                         _txtFile += l2.ToString().Replace(',', '.') + ",";
-                    } 
-                    
+                    }
+
                     _txtFile += "\n";
-                }                
+                }
 
                 sr.Close();
             }
