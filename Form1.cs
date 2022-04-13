@@ -148,6 +148,8 @@ namespace TabMenager
 
                 sr.Close();
             }
+
+            MessageBox.Show("Files were successfully recalculated!!!");
         }
 
         private void DoCalculateValues()
@@ -184,7 +186,7 @@ namespace TabMenager
                         if (elementsInLine[el] != "")
                             elements.Add(StringToFloat(elementsInLine[el]));
                         else
-                            label2.Text += "Ошибка в файлe: " + openFileDialog1.SafeFileNames[f] + "\n";
+                            label2.Text += "Error in file: " + openFileDialog1.SafeFileNames[f] + "\n";
                     }
 
                     //Epsilon E* = (C * d) / (E0 * S)
@@ -228,6 +230,8 @@ namespace TabMenager
 
                 fs.Close();
             }
+
+            MessageBox.Show("Files were successfully recalculated and saved!!!");
         }
 
         private float StringToFloat(string elementStr)
