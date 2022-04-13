@@ -56,19 +56,22 @@ namespace TabMenager
 
         private void SaveFilesButton_Click(object sender, EventArgs e)
         {
+
             if (TemperatureSearch.Checked)
+            {
                 DoTemperatureSearch();
+
+                saveFileDialog1.Filter = "TXT files (*.txt)|*.txt";
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    StreamWriter sw = new StreamWriter(saveFileDialog1.FileName);
+                    sw.Write(_txtFile);
+                    sw.Close();
+                }
+            }
             else
                 DoCalculateValues();
-
-            saveFileDialog1.Filter = "TXT files (*.txt)|*.txt";
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                StreamWriter sw = new StreamWriter(saveFileDialog1.FileName);
-                sw.Write(_txtFile);
-                sw.Close();
-            }
         }
 
         private void DoTemperatureSearch()
@@ -149,8 +152,15 @@ namespace TabMenager
 
         private void DoCalculateValues()
         {
+            if (_fileNames == null)
+                return;
+
             for (int f = 0; f < _fileNames.Length; f++)
             {
+                _txtFile = "";
+
+                string name = openFileDialog1.SafeFileNames[f];
+
                 StreamReader sr = new StreamReader(_fileNames[f]);
 
                 List<List<float>> lines = new List<List<float>>();
@@ -205,6 +215,18 @@ namespace TabMenager
                 }
 
                 sr.Close();
+
+                name = name.Replace(".txt", "");
+
+                string path = _fileNames[f].Replace(name, name + " calculated");
+
+                FileStream fs = File.Create(path);
+
+                byte[] info = new UTF8Encoding(true).GetBytes(_txtFile);
+
+                fs.Write(info, 0, info.Length);
+
+                fs.Close();
             }
         }
 
