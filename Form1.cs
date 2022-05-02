@@ -27,6 +27,8 @@ namespace TabMenager
         private int indexCapacity = 6;
         private int indexTgDelta = 2;
 
+        private bool resetValuesToSearch = true;
+
         public Form1()
         {
             InitializeComponent();
@@ -68,6 +70,8 @@ namespace TabMenager
                     StreamWriter sw = new StreamWriter(saveFileDialog1.FileName);
                     sw.Write(_txtFile);
                     sw.Close();
+
+                    MessageBox.Show("File was successfully created!!!");
                 }
             }
             else
@@ -147,9 +151,7 @@ namespace TabMenager
                 _txtFile += "\n";
 
                 sr.Close();
-            }
-
-            MessageBox.Show("Files were successfully recalculated!!!");
+            }            
         }
 
         private void DoCalculateValues()
@@ -267,6 +269,11 @@ namespace TabMenager
 
         private void SetUpStartValueToSearch()
         {
+            if (!resetValuesToSearch)
+                return;
+
+            resetValuesToSearch = false;
+
             dataGridView1.Rows.Clear();
 
             for (int i = 0; i < _valuesToSearch.Count; i++)
@@ -276,22 +283,31 @@ namespace TabMenager
             }
         }
 
-        private void UpdateValuesToSearch(object sender, DataGridViewCellEventArgs e)
+        private void UpdateValuesToSearch()
         {
             _valuesToSearch.Clear();
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
+                if (dataGridView1.Rows[i].Cells[0].Value == null)
+                    continue;
+
                 try
                 {
-                    int value = (int)dataGridView1.Rows[i].Cells[0].Value;
+                    int value = 0;
+                    if (dataGridView1.Rows[i].Cells[0].Value is string)
+                        value = Convert.ToInt32(dataGridView1.Rows[i].Cells[0].Value);
+                    else
+                        value = (int)dataGridView1.Rows[i].Cells[0].Value;
                     _valuesToSearch.Add(value);
                 }
                 catch
                 {
-                    dataGridView1.Rows[i].Cells[0].Value = "";
+                    dataGridView1.Rows[i].Cells[0].Value = null;
                 }
             }
+
+            SetUpStartValueToSearch();
         }
 
         private void TemperatureSearch_CheckedChanged(object sender, EventArgs e)
@@ -330,6 +346,21 @@ namespace TabMenager
                 checkBox1.Visible = false;
                 checkBox2.Visible = false;
             }
+        }
+
+        private void dataGridView1_CellValuePushed(object sender, DataGridViewCellValueEventArgs e)
+        {
+            //UpdateValuesToSearch();
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {           
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            UpdateValuesToSearch();
+            resetValuesToSearch = true;
         }
     }
 }
