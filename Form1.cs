@@ -26,6 +26,9 @@ namespace TabMenager
 
         private int indexCapacity = 6;
         private int indexTgDelta = 2;
+        private int indexEpsilon = 8;
+        private int indexEpsilon1 = 9;
+        private int indexEpsilon2 = 10;
 
         private bool resetValuesToSearch = true;
 
@@ -141,7 +144,15 @@ namespace TabMenager
 
                 string onlyName = openFileDialog1.SafeFileNames[f];
 
-                _txtFile += onlyName.Remove(onlyName.IndexOf('.'), 4);
+                onlyName = onlyName.Remove(onlyName.IndexOf('.'), 4);
+
+                if (onlyName.Contains(" calculated"))
+                {
+                    int r = onlyName.IndexOf(" calculated");
+                    onlyName = onlyName.Remove(r, 11);
+                }
+
+                _txtFile += onlyName;
 
                 foreach (var filteredLine in filteredLines)
                 {
@@ -242,28 +253,28 @@ namespace TabMenager
 
             return float.Parse(elementStr);
         }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBox2.Checked = !checkBox1.Checked;
-            UpdateColumnIndex();
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBox1.Checked = !checkBox2.Checked;
-            UpdateColumnIndex();
-        }
-
+                
         private void UpdateColumnIndex()
         {
             if (checkBox1.Checked)
             {
                 indexTemteratureSearchColumn = indexTgDelta;
             }
-            else
+            else if (checkBox2.Checked)
             {
                 indexTemteratureSearchColumn = indexCapacity;
+            }
+            else if (EpsilonChB.Checked)
+            {
+                indexTemteratureSearchColumn = indexEpsilon;
+            }
+            else if (Epsilon1ChB.Checked)
+            {
+                indexTemteratureSearchColumn = indexEpsilon1;
+            }
+            else if (Epsilon2ChB.Checked)
+            {
+                indexTemteratureSearchColumn = indexEpsilon2;
             }
         }
 
@@ -334,17 +345,23 @@ namespace TabMenager
                 dataGridView1.Visible = true;
                 checkBox1.Visible = true;
                 checkBox2.Visible = true;
+                EpsilonChB.Visible = true;
+                Epsilon1ChB.Visible = true;
+                Epsilon2ChB.Visible = true;
             }
             else
             {
                 thickness_label.Visible = true;
                 thickness_textBox.Visible = true;
                 area_label.Visible = true;
-                area_textBox.Visible = true;
+                area_textBox.Visible = true;                
 
                 dataGridView1.Visible = false;
                 checkBox1.Visible = false;
                 checkBox2.Visible = false;
+                EpsilonChB.Visible = false;
+                Epsilon1ChB.Visible = false;
+                Epsilon2ChB.Visible = false;
             }
         }
 
@@ -361,6 +378,71 @@ namespace TabMenager
         {
             UpdateValuesToSearch();
             resetValuesToSearch = true;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                checkBox2.Checked = false;
+                EpsilonChB.Checked = false;
+                Epsilon1ChB.Checked = false;
+                Epsilon2ChB.Checked = false;
+
+                UpdateColumnIndex();
+            }            
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+            {
+                checkBox1.Checked = false;
+                EpsilonChB.Checked = false;
+                Epsilon1ChB.Checked = false;
+                Epsilon2ChB.Checked = false;
+
+                UpdateColumnIndex();
+            }
+        }
+
+        private void EpsilonChB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (EpsilonChB.Checked)
+            {
+                checkBox1.Checked = false;
+                checkBox2.Checked = false;
+                Epsilon1ChB.Checked = false;
+                Epsilon2ChB.Checked = false;
+
+                UpdateColumnIndex();
+            }
+        }
+
+        private void Epsilon1ChB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Epsilon1ChB.Checked)
+            {
+                checkBox1.Checked = false;
+                checkBox2.Checked = false;
+                EpsilonChB.Checked = false;
+                Epsilon2ChB.Checked = false;
+
+                UpdateColumnIndex();
+            }
+        }
+
+        private void Epsilon2ChB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Epsilon2ChB.Checked)
+            {
+                checkBox1.Checked = false;
+                checkBox2.Checked = false;
+                EpsilonChB.Checked = false;
+                Epsilon1ChB.Checked = false;
+
+                UpdateColumnIndex();
+            }            
         }
     }
 }

@@ -44,6 +44,9 @@ namespace TabMenager
             this.valueToSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TemperatureSearch = new System.Windows.Forms.CheckBox();
             this.CalculateValues = new System.Windows.Forms.CheckBox();
+            this.EpsilonChB = new System.Windows.Forms.CheckBox();
+            this.Epsilon1ChB = new System.Windows.Forms.CheckBox();
+            this.Epsilon2ChB = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,7 +67,7 @@ namespace TabMenager
             // 
             // SaveFilesButton
             // 
-            this.SaveFilesButton.Location = new System.Drawing.Point(223, 41);
+            this.SaveFilesButton.Location = new System.Drawing.Point(284, 41);
             this.SaveFilesButton.Name = "SaveFilesButton";
             this.SaveFilesButton.Size = new System.Drawing.Size(164, 47);
             this.SaveFilesButton.TabIndex = 1;
@@ -104,7 +107,7 @@ namespace TabMenager
             // 
             // thickness_textBox
             // 
-            this.thickness_textBox.Location = new System.Drawing.Point(204, 100);
+            this.thickness_textBox.Location = new System.Drawing.Point(265, 100);
             this.thickness_textBox.Name = "thickness_textBox";
             this.thickness_textBox.Size = new System.Drawing.Size(183, 20);
             this.thickness_textBox.TabIndex = 6;
@@ -112,7 +115,7 @@ namespace TabMenager
             // thickness_label
             // 
             this.thickness_label.AutoSize = true;
-            this.thickness_label.Location = new System.Drawing.Point(139, 104);
+            this.thickness_label.Location = new System.Drawing.Point(200, 104);
             this.thickness_label.Name = "thickness_label";
             this.thickness_label.Size = new System.Drawing.Size(59, 13);
             this.thickness_label.TabIndex = 7;
@@ -121,7 +124,7 @@ namespace TabMenager
             // area_label
             // 
             this.area_label.AutoSize = true;
-            this.area_label.Location = new System.Drawing.Point(139, 134);
+            this.area_label.Location = new System.Drawing.Point(200, 134);
             this.area_label.Name = "area_label";
             this.area_label.Size = new System.Drawing.Size(32, 13);
             this.area_label.TabIndex = 8;
@@ -129,7 +132,7 @@ namespace TabMenager
             // 
             // area_textBox
             // 
-            this.area_textBox.Location = new System.Drawing.Point(204, 131);
+            this.area_textBox.Location = new System.Drawing.Point(265, 131);
             this.area_textBox.Name = "area_textBox";
             this.area_textBox.Size = new System.Drawing.Size(183, 20);
             this.area_textBox.TabIndex = 9;
@@ -141,7 +144,7 @@ namespace TabMenager
             this.valueToSearch});
             this.dataGridView1.Location = new System.Drawing.Point(12, 172);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(375, 315);
+            this.dataGridView1.Size = new System.Drawing.Size(444, 315);
             this.dataGridView1.TabIndex = 10;
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
@@ -151,7 +154,7 @@ namespace TabMenager
             // 
             this.valueToSearch.HeaderText = "Frequency to search";
             this.valueToSearch.Name = "valueToSearch";
-            this.valueToSearch.Width = 325;
+            this.valueToSearch.Width = 400;
             // 
             // TemperatureSearch
             // 
@@ -175,11 +178,47 @@ namespace TabMenager
             this.CalculateValues.UseVisualStyleBackColor = true;
             this.CalculateValues.CheckedChanged += new System.EventHandler(this.CalculateValues_CheckedChanged);
             // 
+            // EpsilonChB
+            // 
+            this.EpsilonChB.AutoSize = true;
+            this.EpsilonChB.Location = new System.Drawing.Point(96, 104);
+            this.EpsilonChB.Name = "EpsilonChB";
+            this.EpsilonChB.Size = new System.Drawing.Size(33, 17);
+            this.EpsilonChB.TabIndex = 13;
+            this.EpsilonChB.Text = "E";
+            this.EpsilonChB.UseVisualStyleBackColor = true;
+            this.EpsilonChB.CheckedChanged += new System.EventHandler(this.EpsilonChB_CheckedChanged);
+            // 
+            // Epsilon1ChB
+            // 
+            this.Epsilon1ChB.AutoSize = true;
+            this.Epsilon1ChB.Location = new System.Drawing.Point(96, 134);
+            this.Epsilon1ChB.Name = "Epsilon1ChB";
+            this.Epsilon1ChB.Size = new System.Drawing.Size(35, 17);
+            this.Epsilon1ChB.TabIndex = 14;
+            this.Epsilon1ChB.Text = "E\'";
+            this.Epsilon1ChB.UseVisualStyleBackColor = true;
+            this.Epsilon1ChB.CheckedChanged += new System.EventHandler(this.Epsilon1ChB_CheckedChanged);
+            // 
+            // Epsilon2ChB
+            // 
+            this.Epsilon2ChB.AutoSize = true;
+            this.Epsilon2ChB.Location = new System.Drawing.Point(142, 104);
+            this.Epsilon2ChB.Name = "Epsilon2ChB";
+            this.Epsilon2ChB.Size = new System.Drawing.Size(37, 17);
+            this.Epsilon2ChB.TabIndex = 15;
+            this.Epsilon2ChB.Text = "E\'\'";
+            this.Epsilon2ChB.UseVisualStyleBackColor = true;
+            this.Epsilon2ChB.CheckedChanged += new System.EventHandler(this.Epsilon2ChB_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(399, 499);
+            this.ClientSize = new System.Drawing.Size(460, 499);
+            this.Controls.Add(this.Epsilon2ChB);
+            this.Controls.Add(this.Epsilon1ChB);
+            this.Controls.Add(this.EpsilonChB);
             this.Controls.Add(this.CalculateValues);
             this.Controls.Add(this.TemperatureSearch);
             this.Controls.Add(this.dataGridView1);
@@ -214,9 +253,12 @@ namespace TabMenager
         private System.Windows.Forms.Label area_label;
         private System.Windows.Forms.TextBox area_textBox;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn valueToSearch;
         private System.Windows.Forms.CheckBox TemperatureSearch;
         private System.Windows.Forms.CheckBox CalculateValues;
+        private System.Windows.Forms.DataGridViewTextBoxColumn valueToSearch;
+        private System.Windows.Forms.CheckBox EpsilonChB;
+        private System.Windows.Forms.CheckBox Epsilon1ChB;
+        private System.Windows.Forms.CheckBox Epsilon2ChB;
     }
 }
 
