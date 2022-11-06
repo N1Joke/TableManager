@@ -36,6 +36,9 @@ namespace TabMenager
         {
             InitializeComponent();
 
+            _valuesToSearch = new List<int>
+        {5, 10, 100, 1000, 10000, 100000, 500000, 1000000, 5000000, 10000000, 15000000, 20000000};
+
             checkBox1.Checked = true;
             checkBox2.Checked = false;
 
@@ -111,7 +114,7 @@ namespace TabMenager
                     }
                     else
                     {
-                        label2.Text += "Ошибка в файлe: " + openFileDialog1.SafeFileNames[f] + "\n";
+                        label2.Text += "Error in file: " + openFileDialog1.SafeFileNames[f] + "\n";
                     }
 
                     lines.Add(elements);
@@ -278,12 +281,14 @@ namespace TabMenager
             }
         }
 
+        private bool canClearValuesToSearch = true;
+
         private void SetUpStartValueToSearch()
         {
             if (!resetValuesToSearch)
                 return;
 
-            resetValuesToSearch = false;
+            canClearValuesToSearch = false;
 
             dataGridView1.Rows.Clear();
 
@@ -292,10 +297,16 @@ namespace TabMenager
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells[0].Value = _valuesToSearch[i];
             }
+
+            canClearValuesToSearch = true;
+            resetValuesToSearch = false;
         }
 
         private void UpdateValuesToSearch()
         {
+            if (!canClearValuesToSearch)
+                return;
+
             _valuesToSearch.Clear();
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -365,21 +376,6 @@ namespace TabMenager
             }
         }
 
-        private void dataGridView1_CellValuePushed(object sender, DataGridViewCellValueEventArgs e)
-        {
-            //UpdateValuesToSearch();
-        }
-
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {           
-        }
-
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            UpdateValuesToSearch();
-            resetValuesToSearch = true;
-        }
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
@@ -443,6 +439,12 @@ namespace TabMenager
 
                 UpdateColumnIndex();
             }            
+        }
+
+        private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            UpdateValuesToSearch();
+            resetValuesToSearch = true;
         }
     }
 }
