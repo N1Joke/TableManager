@@ -206,7 +206,8 @@ namespace TabMenager
                     }
 
                     //Epsilon E* = (C * d) / (E0 * S)
-                    float epsilon = (elements[indexCapacity] * StringToFloat(thickness_textBox.Text)) /(EpsZero * StringToFloat(area_textBox.Text));
+                    //float epsilon = (elements[indexCapacity] * StringToFloat(thickness_textBox.Text)) /(EpsZero * StringToFloat(area_textBox.Text));
+                    float epsilon = elements[indexCapacity] * StringToFloat(multiplier_textBox.Text);
                     elements.Add(epsilon);
 
                     //Real part Epsilon E' = E* / (sqrt(1 + tg^2(delta))) ---- Math.Pow(Math.Tan(delta), 2)

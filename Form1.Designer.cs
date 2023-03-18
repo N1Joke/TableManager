@@ -47,6 +47,8 @@ namespace TabMenager
             this.EpsilonChB = new System.Windows.Forms.CheckBox();
             this.Epsilon1ChB = new System.Windows.Forms.CheckBox();
             this.Epsilon2ChB = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.multiplier_textBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -142,9 +144,9 @@ namespace TabMenager
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.valueToSearch});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 172);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 189);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(444, 315);
+            this.dataGridView1.Size = new System.Drawing.Size(444, 298);
             this.dataGridView1.TabIndex = 10;
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellEndEdit);
             // 
@@ -209,11 +211,29 @@ namespace TabMenager
             this.Epsilon2ChB.UseVisualStyleBackColor = true;
             this.Epsilon2ChB.CheckedChanged += new System.EventHandler(this.Epsilon2ChB_CheckedChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(200, 164);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Multiplier:";
+            // 
+            // multiplier_textBox
+            // 
+            this.multiplier_textBox.Location = new System.Drawing.Point(265, 161);
+            this.multiplier_textBox.Name = "multiplier_textBox";
+            this.multiplier_textBox.Size = new System.Drawing.Size(183, 20);
+            this.multiplier_textBox.TabIndex = 17;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(460, 499);
+            this.Controls.Add(this.multiplier_textBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.Epsilon2ChB);
             this.Controls.Add(this.Epsilon1ChB);
             this.Controls.Add(this.EpsilonChB);
@@ -257,6 +277,8 @@ namespace TabMenager
         private System.Windows.Forms.CheckBox EpsilonChB;
         private System.Windows.Forms.CheckBox Epsilon1ChB;
         private System.Windows.Forms.CheckBox Epsilon2ChB;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox multiplier_textBox;
     }
 }
 
