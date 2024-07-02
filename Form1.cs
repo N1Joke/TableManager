@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -53,6 +48,7 @@ namespace TabMenager
         private void OpenFilesButton_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "TXT files (*.txt)|*.txt";
+            
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 _fileNames = openFileDialog1.FileNames;
@@ -266,7 +262,7 @@ namespace TabMenager
             }
             else if (checkBox2.Checked)
             {
-                indexTemteratureSearchColumn = indexCapacity;
+                indexTemteratureSearchColumn = 1;
             }
             else if (EpsilonChB.Checked)
             {
